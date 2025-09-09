@@ -30,11 +30,13 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        // Get active sliders
+        // Get active sliders with local images only
         $sliders = Slider::where('status', 'active')
+            ->localImages()
             ->orderBy('sort_order')
             ->limit(5)
             ->get();
+        // dd($sliders);
 
         // Get featured gallery items
         $galleryItems = Gallery::where('status', 'active')
@@ -48,7 +50,7 @@ class HomeController extends Controller
 
         return view('frontend.home', compact(
             'featuredNews',
-            'latestNews', 
+            'latestNews',
             'sliders',
             'galleryItems',
             'settings'

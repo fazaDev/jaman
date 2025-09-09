@@ -5,17 +5,17 @@
 
 @section('content')
 <!-- Page Header -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="bg-blue-800 py-12">
+    <div class="container mx-auto px-4">
         <div class="text-center text-white">
             <div class="flex items-center justify-center mb-4">
                 <div class="w-4 h-4 rounded-full mr-3" style="background-color: {{ $category->color }}"></div>
-                <h1 class="text-4xl font-bold">{{ $category->name }}</h1>
+                <h1 class="text-3xl md:text-4xl font-bold">{{ $category->name }}</h1>
             </div>
             @if($category->description)
-            <p class="text-xl text-blue-100">{{ $category->description }}</p>
+            <p class="text-lg text-blue-100">{{ $category->description }}</p>
             @else
-            <p class="text-xl text-blue-100">Berita kategori {{ $category->name }}</p>
+            <p class="text-lg text-blue-100">Berita kategori {{ $category->name }}</p>
             @endif
         </div>
     </div>
@@ -23,7 +23,7 @@
 
 <!-- Breadcrumb -->
 <section class="bg-gray-100 py-4">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto px-4">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-4">
                 <li>
@@ -42,13 +42,13 @@
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
                 </li>
-                <li class="text-gray-900 font-medium">{{ $category->name }}</li>
+                <li class="text-blue-800 font-medium">{{ $category->name }}</li>
             </ol>
         </nav>
     </div>
 </section>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="container mx-auto px-4 py-12">
     <div class="flex flex-col lg:flex-row gap-8">
         <!-- Main Content -->
         <div class="lg:w-2/3">
@@ -58,12 +58,12 @@
                 <article class="flex flex-col sm:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     @if($item->featured_image)
                     <div class="sm:w-1/3">
-                        <img src="{{ Storage::url($item->featured_image) }}" 
+                        <img src="{{ Storage::url($item->featured_image) }}"
                              alt="{{ $item->featured_image_alt ?? $item->title }}"
                              class="w-full h-48 sm:h-full object-cover">
                     </div>
                     @endif
-                    
+
                     <div class="p-6 flex-1">
                         <div class="flex items-center mb-3">
                             <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full"
@@ -74,15 +74,15 @@
                                 {{ $item->published_at->format('d F Y') }} • {{ $item->published_at->diffForHumans() }}
                             </span>
                         </div>
-                        
+
                         <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
                             <a href="{{ route('news.show', $item->slug) }}">{{ $item->title }}</a>
                         </h3>
-                        
+
                         @if($item->excerpt)
                         <p class="text-gray-600 mb-4 line-clamp-2">{{ $item->excerpt }}</p>
                         @endif
-                        
+
                         <div class="flex items-center justify-between">
                             <div class="flex items-center text-sm text-gray-500">
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -96,8 +96,8 @@
                                 </svg>
                                 {{ number_format($item->views_count ?? 0) }} views
                             </div>
-                            
-                            <a href="{{ route('news.show', $item->slug) }}" 
+
+                            <a href="{{ route('news.show', $item->slug) }}"
                                class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
                                 Baca Selengkapnya
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +109,7 @@
                 </article>
                 @endforeach
             </div>
-            
+
             <!-- Pagination -->
             <div class="mt-8">
                 {{ $news->links() }}
@@ -122,7 +122,7 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada berita</h3>
                 <p class="text-gray-600">Berita kategori {{ $category->name }} akan ditampilkan di sini ketika sudah tersedia.</p>
                 <div class="mt-6">
-                    <a href="{{ route('news.index') }}" 
+                    <a href="{{ route('news.index') }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -140,7 +140,7 @@
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Navigasi</h3>
                 <div class="space-y-3">
-                    <a href="{{ route('news.index') }}" 
+                    <a href="{{ route('news.index') }}"
                        class="flex items-center text-blue-600 hover:text-blue-700 transition-colors">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -158,7 +158,7 @@
                     @foreach($categories as $cat)
                     @if($cat->id !== $category->id)
                     <li>
-                        <a href="{{ route('news.category', $cat->slug) }}" 
+                        <a href="{{ route('news.category', $cat->slug) }}"
                            class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors">
                             <div class="flex items-center">
                                 <div class="w-4 h-4 rounded-full mr-3" style="background-color: {{ $cat->color }}"></div>
@@ -181,7 +181,7 @@
                     @foreach($popularNews as $item)
                     <article class="flex space-x-3">
                         @if($item->featured_image)
-                        <img src="{{ Storage::url($item->featured_image) }}" 
+                        <img src="{{ Storage::url($item->featured_image) }}"
                              alt="{{ $item->title }}"
                              class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
                         @else
@@ -191,7 +191,7 @@
                             </svg>
                         </div>
                         @endif
-                        
+
                         <div class="flex-1 min-w-0">
                             <h4 class="text-sm font-medium text-gray-900 line-clamp-2 hover:text-blue-600 transition-colors">
                                 <a href="{{ route('news.show', $item->slug) }}">{{ $item->title }}</a>
@@ -209,7 +209,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Cari Berita</h3>
                 <form method="GET" action="{{ route('news.index') }}">
                     <div class="relative">
-                        <input type="search" 
+                        <input type="search"
                                name="search"
                                placeholder="Cari berita..."
                                class="w-full px-4 py-2 pl-10 pr-4 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">

@@ -1,22 +1,22 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Berita - ' . setting('site.title', 'Website Pemerintah'))
-@section('description', 'Berita terbaru dan informasi penting dari ' . setting('site.title', 'Website Pemerintah'))
+@section('title', 'Berita - ' . setting('site.title', 'PUPR Provinsi Jambi'))
+@section('description', 'Berita terbaru dan informasi penting dari ' . setting('site.title', 'PUPR Provinsi Jambi'))
 
 @section('content')
 <!-- Page Header -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-800 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="bg-blue-800 py-12">
+    <div class="container mx-auto px-4">
         <div class="text-center text-white">
-            <h1 class="text-4xl font-bold mb-4">Berita</h1>
-            <p class="text-xl text-blue-100">Informasi terbaru dan terpenting untuk Anda</p>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Berita Terkini</h1>
+            <p class="text-lg text-blue-100">Informasi terbaru dan terpenting dari {{ setting('site.title', 'PUPR Provinsi Jambi') }}</p>
         </div>
     </div>
 </section>
 
 <!-- Breadcrumb -->
 <section class="bg-gray-100 py-4">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto px-4">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-4">
                 <li>
@@ -27,56 +27,56 @@
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
                 </li>
-                <li class="text-gray-900 font-medium">Berita</li>
+                <li class="text-blue-800 font-medium">Berita</li>
             </ol>
         </nav>
     </div>
 </section>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="container mx-auto px-4 py-12">
     <div class="flex flex-col lg:flex-row gap-8">
         <!-- Main Content -->
         <div class="lg:w-2/3">
             <!-- Featured News -->
             @if(isset($featuredNews) && $featuredNews->count() > 0)
             <section class="mb-12">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Berita Unggulan</h2>
+                <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
+                    <i class="fas fa-star text-yellow-400 mr-2"></i>
+                    Berita Unggulan
+                </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @foreach($featuredNews as $featuredItem)
-                    <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 news-card">
                         @if($featuredItem->featured_image)
                         <div class="aspect-w-16 aspect-h-9">
-                            <img src="{{ Storage::url($featuredItem->featured_image) }}" 
+                            <img src="{{ Storage::url($featuredItem->featured_image) }}"
                                  alt="{{ $featuredItem->featured_image_alt ?? $featuredItem->title }}"
                                  class="w-full h-48 object-cover">
                         </div>
                         @endif
-                        
+
                         <div class="p-6">
                             <div class="flex items-center mb-4">
-                                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full"
-                                      style="background-color: {{ $featuredItem->category->color }}20; color: {{ $featuredItem->category->color }}">
+                                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-blue-800">
                                     {{ $featuredItem->category->name }}
                                 </span>
                                 <span class="text-gray-500 text-sm ml-auto">
-                                    {{ $featuredItem->published_at->diffForHumans() }}
+                                    {{ $featuredItem->published_at->locale('id')->diffForHumans() }}
                                 </span>
                             </div>
-                            
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors">
+
+                            <h3 class="text-lg font-bold text-blue-800 mb-3 hover:text-yellow-600 transition-colors">
                                 <a href="{{ route('news.show', $featuredItem->slug) }}">{{ $featuredItem->title }}</a>
                             </h3>
-                            
+
                             @if($featuredItem->excerpt)
-                            <p class="text-gray-600 mb-4 line-clamp-3">{{ $featuredItem->excerpt }}</p>
+                            <p class="text-gray-600 mb-4 text-sm">{{ Str::limit($featuredItem->excerpt, 120) }}</p>
                             @endif
-                            
-                            <a href="{{ route('news.show', $featuredItem->slug) }}" 
-                               class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
+
+                            <a href="{{ route('news.show', $featuredItem->slug) }}"
+                               class="text-blue-800 hover:text-yellow-600 font-medium text-sm flex items-center">
                                 Baca Selengkapnya
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
+                                <i class="fas fa-arrow-right ml-2 text-xs"></i>
                             </a>
                         </div>
                     </article>
@@ -88,8 +88,11 @@
             <!-- All News -->
             <section>
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-900">Semua Berita</h2>
-                    
+                    <h2 class="text-2xl font-bold text-blue-800 flex items-center">
+                        <i class="fas fa-newspaper mr-2"></i>
+                        Semua Berita
+                    </h2>
+
                     <!-- Sort Options -->
                     <div class="flex items-center space-x-4">
                         <span class="text-sm text-gray-600">Urutkan:</span>
@@ -100,65 +103,57 @@
                         </select>
                     </div>
                 </div>
-                
+
                 @if(isset($news) && $news->count() > 0)
                 <div class="space-y-6">
                     @foreach($news as $newsItem)
-                    <article class="flex flex-col sm:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <article class="flex flex-col sm:flex-row bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 news-card">
                         @if($newsItem->featured_image)
                         <div class="sm:w-1/3">
-                            <img src="{{ Storage::url($newsItem->featured_image) }}" 
+                            <img src="{{ Storage::url($newsItem->featured_image) }}"
                                  alt="{{ $newsItem->featured_image_alt ?? $newsItem->title }}"
                                  class="w-full h-48 sm:h-full object-cover">
                         </div>
                         @endif
-                        
+
                         <div class="p-6 flex-1">
                             <div class="flex items-center mb-3">
-                                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full"
-                                      style="background-color: {{ $newsItem->category->color }}20; color: {{ $newsItem->category->color }}">
+                                <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-blue-800">
                                     {{ $newsItem->category->name }}
                                 </span>
                                 <span class="text-gray-500 text-sm ml-auto">
-                                    {{ $newsItem->published_at->format('d F Y') }} • {{ $newsItem->published_at->diffForHumans() }}
+                                    {{ $newsItem->published_at->locale('id')->format('d F Y') }} • {{ $newsItem->published_at->locale('id')->diffForHumans() }}
                                 </span>
                             </div>
-                            
-                            <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+
+                            <h3 class="text-lg font-bold text-blue-800 mb-3 hover:text-yellow-600 transition-colors">
                                 <a href="{{ route('news.show', $newsItem->slug) }}">{{ $newsItem->title }}</a>
                             </h3>
-                            
+
                             @if($newsItem->excerpt)
-                            <p class="text-gray-600 mb-4 line-clamp-2">{{ $newsItem->excerpt }}</p>
+                            <p class="text-gray-600 mb-4 text-sm">{{ Str::limit($newsItem->excerpt, 150) }}</p>
                             @endif
-                            
+
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center text-sm text-gray-500">
-                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                                    </svg>
+                                    <i class="fas fa-user mr-1"></i>
                                     {{ $newsItem->author->name }}
                                     <span class="mx-2">•</span>
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
+                                    <i class="fas fa-eye mr-1"></i>
                                     {{ number_format($newsItem->views_count ?? 0) }} views
                                 </div>
-                                
-                                <a href="{{ route('news.show', $newsItem->slug) }}" 
-                                   class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
+
+                                <a href="{{ route('news.show', $newsItem->slug) }}"
+                                   class="text-blue-800 hover:text-yellow-600 font-medium text-sm flex items-center">
                                     Baca Selengkapnya
-                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                    </svg>
+                                    <i class="fas fa-arrow-right ml-2 text-xs"></i>
                                 </a>
                             </div>
                         </div>
                     </article>
                     @endforeach
                 </div>
-                
+
                 <!-- Pagination -->
                 <div class="mt-8">
                     {{ $news->links() }}
@@ -182,7 +177,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Cari Berita</h3>
                 <form method="GET" action="{{ route('news.index') }}">
                     <div class="relative">
-                        <input type="search" 
+                        <input type="search"
                                name="search"
                                value="{{ request('search') }}"
                                placeholder="Cari berita..."
@@ -206,7 +201,7 @@
                 <ul class="space-y-2">
                     @foreach($categories as $category)
                     <li>
-                        <a href="{{ route('news.category', $category->slug) }}" 
+                        <a href="{{ route('news.category', $category->slug) }}"
                            class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors">
                             <div class="flex items-center">
                                 <div class="w-4 h-4 rounded-full mr-3" style="background-color: {{ $category->color }}"></div>
@@ -228,7 +223,7 @@
                     @foreach($popularNews as $popularItem)
                     <article class="flex space-x-3">
                         @if($popularItem->featured_image)
-                        <img src="{{ Storage::url($popularItem->featured_image) }}" 
+                        <img src="{{ Storage::url($popularItem->featured_image) }}"
                              alt="{{ $popularItem->title }}"
                              class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
                         @else
@@ -238,7 +233,7 @@
                             </svg>
                         </div>
                         @endif
-                        
+
                         <div class="flex-1 min-w-0">
                             <h4 class="text-sm font-medium text-gray-900 line-clamp-2 hover:text-blue-600 transition-colors">
                                 <a href="{{ route('news.show', $popularItem->slug) }}">{{ $popularItem->title }}</a>
@@ -260,7 +255,7 @@
                         $date = now()->subMonths($i);
                     @endphp
                     <li>
-                        <a href="{{ route('news.index', ['month' => $date->month, 'year' => $date->year]) }}" 
+                        <a href="{{ route('news.index', ['month' => $date->month, 'year' => $date->year]) }}"
                            class="block py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
                             {{ $date->locale('id')->translatedFormat('F Y') }}
                         </a>

@@ -4,156 +4,193 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <title>@yield('title', setting('site.title', 'Website Pemerintah'))</title>
     <meta name="description" content="@yield('description', setting('site.description', 'Website resmi pemerintah'))">
     <meta name="keywords" content="@yield('keywords', setting('site.keywords', 'pemerintah, indonesia'))">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="@yield('title', setting('site.title', 'Website Pemerintah'))">
     <meta property="og:description" content="@yield('description', setting('site.description', 'Website resmi pemerintah'))">
     <meta property="og:image" content="@yield('og_image', asset('images/og-default.jpg'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 140px); /* Subtract topbar (42px) + header (70px) + nav (28px) */
+            overflow: hidden;
+        }
+
+        .hero-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .hero-slider {
+                height: calc(100vh - 160px); /* Mobile: account for stacked header elements */
+                margin-top: 0;
+            }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
         .garuda-pattern {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E");
         }
-        
+
         .government-gradient {
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
         }
-        
-        .red-white-gradient {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #ffffff 100%);
-        }
     </style>
-    
+
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-gray-50">
+<body class="bg-gray-50">
     <!-- Skip to content -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50">
         Skip to main content
     </a>
 
-    <!-- Top Header Bar -->
-    <div class="bg-red-600 text-white py-2">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center text-sm">
-                <div class="flex items-center space-x-6">
-                    <span class="flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                        </svg>
-                        {{ setting('contact.email', 'info@example.gov.id') }}
-                    </span>
-                    <span class="flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                        </svg>
-                        {{ setting('contact.phone', '021-1234567') }}
-                    </span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span>{{ now()->locale('id')->translatedFormat('l, d F Y') }}</span>
-                    <div class="flex items-center space-x-2">
-                        <a href="#" class="hover:text-gray-300 transition-colors">
-                            <span class="sr-only">Facebook</span>
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="hover:text-gray-300 transition-colors">
-                            <span class="sr-only">Twitter</span>
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="hover:text-gray-300 transition-colors">
-                            <span class="sr-only">Instagram</span>
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C3.182 14.498 2.8 12.999 2.8 11.4c0-1.599.382-3.098 1.326-4.291.875-.807 2.026-1.297 3.323-1.297 1.297 0 2.448.49 3.323 1.297.944 1.193 1.326 2.692 1.326 4.291 0 1.599-.382 3.098-1.326 4.291-.875.807-2.026 1.297-3.323 1.297zm11.104-1.297c-.875.807-2.026 1.297-3.323 1.297-1.297 0-2.448-.49-3.323-1.297-.944-1.193-1.326-2.692-1.326-4.291 0-1.599.382-3.098 1.326-4.291.875-.807 2.026-1.297 3.323-1.297 1.297 0 2.448.49 3.323 1.297.944 1.193 1.326 2.692 1.326 4.291 0 1.599-.382 3.098-1.326 4.291z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+    <!-- Top Bar -->
+    <div class="bg-blue-800 text-white py-2 px-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-sm mb-2 md:mb-0">
+                <span class="mr-4"><i class="fas fa-phone-alt mr-1"></i> {{ setting('contact.phone', '(0741) 1234567') }}</span>
+                <span><i class="fas fa-envelope mr-1"></i> {{ setting('contact.email', 'pupr@jambiprov.go.id') }}</span>
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
     </div>
 
-    <!-- Main Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-4">
-                        <img src="{{ asset('images/logo-garuda.png') }}" alt="Logo" class="h-12 w-auto">
-                        <div>
-                            <h1 class="text-xl font-bold text-gray-900">{{ setting('site.title', 'Website Pemerintah') }}</h1>
-                            <p class="text-sm text-gray-600">{{ setting('site.subtitle', 'Republik Indonesia') }}</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Search -->
-                <div class="hidden md:flex items-center max-w-md mx-8 flex-1">
-                    <div class="relative w-full">
-                        <input type="search" 
-                               placeholder="Cari berita, informasi..."
-                               class="w-full px-4 py-2 pl-10 pr-4 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" id="mobile-menu-button" class="p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <img src="{{ asset('images/logo-ok1.png') }}" alt="PUPR Logo" class="h-16 mr-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-blue-800">{{ strtoupper(setting('site.title', 'PEMERINTAH PROVINSI JAMBI')) }}</h1>
+                    <p class="text-sm text-gray-600">{{ setting('site.subtitle', 'Dinas Pekerjaan Umum dan Perumahan Rakyat') }}</p>
                 </div>
             </div>
+            <div class="relative">
+                <input type="text" placeholder="Search..." class="border border-gray-300 rounded-full py-2 px-4 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                <button class="absolute right-3 top-2 text-gray-500 hover:text-blue-800">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
+    </header>
 
         <!-- Navigation -->
-        <nav class="government-gradient garuda-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex space-x-8">
-                    <a href="{{ route('home') }}" class="text-white hover:text-blue-200 px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-200 transition-all {{ request()->routeIs('home') ? 'border-blue-200 bg-blue-700/30' : '' }}">
-                        Beranda
+        <nav class="bg-blue-700 text-white sticky top-0 z-50 shadow-lg">
+            <div class="container mx-auto px-4">
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex justify-end py-3">
+                    <button id="mobileMenuButton" class="text-white hover:text-yellow-300 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div id="navMenu" class="hidden md:flex flex-col md:flex-row">
+                    <a href="{{ route('home') }}" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center {{ request()->routeIs('home') ? 'bg-blue-800' : '' }}">
+                        <i class="fas fa-home mr-2"></i> Beranda
                     </a>
-                    <a href="{{ route('about') }}" class="text-white hover:text-blue-200 px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-200 transition-all {{ request()->routeIs('about') ? 'border-blue-200 bg-blue-700/30' : '' }}">
-                        Tentang Kami
+
+                    @foreach($mainMenuPages as $page)
+                        @if($page->children->count() > 0)
+                            <!-- Dropdown menu for pages with children -->
+                            <div class="dropdown relative">
+                                <button class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center w-full md:w-auto justify-between">
+                                    <span class="flex items-center">
+                                        <i class="{{ $page->icon }} mr-2"></i> {{ $page->title }}
+                                    </span>
+                                    <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                                </button>
+                                <div class="dropdown-menu absolute left-0 mt-0 w-full md:w-48 bg-white text-gray-800 shadow-lg rounded-b-md hidden">
+                                    @foreach($page->children as $index => $child)
+                                        <a href="{{ route('page.show', $child->slug) }}"
+                                           class="block px-4 py-2 hover:bg-blue-100 {{ $index < $page->children->count() - 1 ? 'border-b border-gray-100' : 'rounded-b-md' }}">
+                                            {{ $child->title }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <!-- Single menu item -->
+                            <a href="{{ route('page.show', $page->slug) }}" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center {{ request()->route('slug') == $page->slug ? 'bg-blue-800' : '' }}">
+                                <i class="{{ $page->icon }} mr-2"></i> {{ $page->title }}
+                            </a>
+                        @endif
+                    @endforeach
+
+                    <!-- Static menu items -->
+                    <a href="{{ route('news.index') }}" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center {{ request()->routeIs('news.*') ? 'bg-blue-800' : '' }}">
+                        <i class="fas fa-newspaper mr-2"></i> Berita
                     </a>
-                    <a href="{{ route('news.index') }}" class="text-white hover:text-blue-200 px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-200 transition-all {{ request()->routeIs('news.*') ? 'border-blue-200 bg-blue-700/30' : '' }}">
-                        Berita
+
+                    <a href="#" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center">
+                        <i class="fas fa-chart-line mr-2"></i> Data & Statistik
                     </a>
-                    <a href="{{ route('gallery.index') }}" class="text-white hover:text-blue-200 px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-200 transition-all {{ request()->routeIs('gallery.*') ? 'border-blue-200 bg-blue-700/30' : '' }}">
-                        Galeri
+
+                    <a href="#" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Publikasi
                     </a>
-                    <a href="{{ route('contact') }}" class="text-white hover:text-blue-200 px-3 py-4 text-sm font-medium border-b-2 border-transparent hover:border-blue-200 transition-all {{ request()->routeIs('contact') ? 'border-blue-200 bg-blue-700/30' : '' }}">
-                        Kontak
-                    </a>
+
+                    @if(isset($mainMenuPages) && $mainMenuPages->where('slug', 'contact')->count() == 0)
+                        <!-- Show contact link if not in dynamic menu -->
+                        <a href="{{ route('contact') }}" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center {{ request()->routeIs('contact') ? 'bg-blue-800' : '' }}">
+                            <i class="fas fa-headset mr-2"></i> Layanan Publik
+                        </a>
+                    @endif
                 </div>
             </div>
         </nav>
@@ -161,11 +198,44 @@
         <!-- Mobile Navigation -->
         <div id="mobile-menu" class="md:hidden hidden bg-blue-600">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium">Beranda</a>
-                <a href="{{ route('about') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium">Tentang Kami</a>
-                <a href="{{ route('news.index') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium">Berita</a>
-                <a href="{{ route('gallery.index') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium">Galeri</a>
-                <a href="{{ route('contact') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium">Kontak</a>
+                <a href="{{ route('home') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium {{ request()->routeIs('home') ? 'bg-blue-700' : '' }}">
+                    <i class="fas fa-home mr-2"></i> Beranda
+                </a>
+
+                @foreach($mainMenuPages as $page)
+                    @if($page->children->count() > 0)
+                        <!-- Parent page with children -->
+                        <div class="space-y-1">
+                            <div class="text-white px-3 py-2 text-base font-medium bg-blue-700">
+                                <i class="{{ $page->icon }} mr-2"></i> {{ $page->title }}
+                            </div>
+                            @foreach($page->children as $child)
+                                <a href="{{ route('page.show', $child->slug) }}" class="text-white hover:text-blue-200 block px-6 py-2 text-sm font-medium">
+                                    {{ $child->title }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <!-- Single page -->
+                        <a href="{{ route('page.show', $page->slug) }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium {{ request()->route('slug') == $page->slug ? 'bg-blue-700' : '' }}">
+                            <i class="{{ $page->icon }} mr-2"></i> {{ $page->title }}
+                        </a>
+                    @endif
+                @endforeach
+
+                <a href="{{ route('news.index') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium {{ request()->routeIs('news.*') ? 'bg-blue-700' : '' }}">
+                    <i class="fas fa-newspaper mr-2"></i> Berita
+                </a>
+                <a href="{{ route('gallery.index') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium {{ request()->routeIs('gallery.*') ? 'bg-blue-700' : '' }}">
+                    <i class="fas fa-images mr-2"></i> Galeri
+                </a>
+
+                @if(isset($mainMenuPages) && $mainMenuPages->where('slug', 'contact')->count() == 0)
+                    <!-- Show contact link if not in dynamic menu -->
+                    <a href="{{ route('contact') }}" class="text-white hover:text-blue-200 block px-3 py-2 text-base font-medium {{ request()->routeIs('contact') ? 'bg-blue-700' : '' }}">
+                        <i class="fas fa-headset mr-2"></i> Kontak
+                    </a>
+                @endif
             </div>
         </div>
     </header>
@@ -176,124 +246,145 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white">
-        <!-- Main Footer -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- About -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="{{ asset('images/logo-garuda.png') }}" alt="Logo" class="h-10 w-auto">
-                        <div>
-                            <h3 class="text-lg font-semibold">{{ setting('site.title', 'Website Pemerintah') }}</h3>
-                            <p class="text-gray-400 text-sm">{{ setting('site.subtitle', 'Republik Indonesia') }}</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-4">{{ setting('site.description', 'Website resmi pemerintah yang menyediakan informasi dan layanan kepada masyarakat.') }}</p>
+    <footer class="bg-blue-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4 text-yellow-400">Tentang Kami</h4>
+                    <p class="text-sm mb-4">{{ setting('site.title', 'Dinas PUPR') }} Provinsi Jambi berkomitmen untuk mewujudkan Jambi Mantap melalui berbagai program pembangunan infrastruktur dan perumahan rakyat.</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C3.182 14.498 2.8 12.999 2.8 11.4c0-1.599.382-3.098 1.326-4.291.875-.807 2.026-1.297 3.323-1.297 1.297 0 2.448.49 3.323 1.297.944 1.193 1.326 2.692 1.326 4.291 0 1.599-.382 3.098-1.326 4.291-.875.807-2.026 1.297-3.323 1.297zm11.104-1.297c-.875.807-2.026 1.297-3.323 1.297-1.297 0-2.448-.49-3.323-1.297-.944-1.193-1.326-2.692-1.326-4.291 0-1.599.382-3.098 1.326-4.291.875-.807 2.026-1.297 3.323-1.297 1.297 0 2.448.49 3.323 1.297.944 1.193 1.326 2.692 1.326 4.291 0 1.599-.382 3.098-1.326 4.291z"/></svg>
-                        </a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Tautan Cepat</h3>
+                    <h4 class="text-xl font-bold mb-4 text-yellow-400">Link Terkait</h4>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-white transition-colors">Beranda</a></li>
-                        <li><a href="{{ route('about') }}" class="text-gray-300 hover:text-white transition-colors">Tentang Kami</a></li>
-                        <li><a href="{{ route('news.index') }}" class="text-gray-300 hover:text-white transition-colors">Berita</a></li>
-                        <li><a href="{{ route('gallery.index') }}" class="text-gray-300 hover:text-white transition-colors">Galeri</a></li>
-                        <li><a href="{{ route('contact') }}" class="text-gray-300 hover:text-white transition-colors">Kontak</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Kementerian Dalam Negeri</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Badan Pusat Statistik</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Kementerian PUPR</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">BPK RI</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Pemerintah Provinsi Jambi</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Kontak</h3>
-                    <div class="space-y-2 text-gray-300">
-                        <p class="flex items-start">
-                            <svg class="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                            </svg>
-                            {{ setting('contact.address', 'Jl. Example No. 123, Jakarta, Indonesia') }}
-                        </p>
-                        <p class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                            </svg>
-                            {{ setting('contact.phone', '021-1234567') }}
-                        </p>
-                        <p class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                            </svg>
-                            {{ setting('contact.email', 'info@example.gov.id') }}
-                        </p>
-                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-yellow-400">Layanan Publik</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Pengaduan Masyarakat</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Perizinan Online</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Data Terbuka</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">E-Government</a></li>
+                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Lowongan Kerja</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold mb-4 text-yellow-400">Kontak Kami</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-yellow-400"></i>
+                            <span class="text-sm">{{ setting('contact.address', 'Jl. Jend. A. Yani No. 1, Jambi') }}</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-yellow-400"></i>
+                            <span class="text-sm">{{ setting('contact.phone', '(0741) 1234567') }}</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-yellow-400"></i>
+                            <span class="text-sm">{{ setting('contact.email', 'pupr@jambiprov.go.id') }}</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock mr-3 text-yellow-400"></i>
+                            <span class="text-sm">Senin-Jumat: 08.00-16.00 WIB</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <!-- Bottom Footer -->
-        <div class="border-t border-gray-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="border-t border-blue-800 pt-6">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} {{ setting('site.title', 'Website Pemerintah') }}. Hak Cipta Dilindungi.</p>
-                    <div class="flex space-x-6 mt-4 md:mt-0">
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Kebijakan Privasi</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Syarat & Ketentuan</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Sitemap</a>
+                    <div class="mb-4 md:mb-0">
+                        <img src="{{ asset('images/logo-garuda.png') }}" alt="Logo" class="h-12">
+                    </div>
+                    <div class="text-sm text-center md:text-right">
+                        <p>&copy; {{ date('Y') }} {{ setting('site.title', 'Dinas PUPR') }} Provinsi Jambi. Seluruh hak cipta dilindungi.</p>
+                        <p class="mt-1">Dikembangkan oleh Tim IT {{ setting('site.title', 'PUPR') }} Provinsi Jambi</p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 opacity-0 invisible">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-        </svg>
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-800 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hidden hover:bg-blue-700 transition-colors duration-300">
+        <i class="fas fa-arrow-up"></i>
     </button>
 
     <!-- Scripts -->
     <script>
         // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const navMenu = document.getElementById('navMenu');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
 
-        // Scroll to top
-        const scrollToTopBtn = document.getElementById('scroll-to-top');
-        
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.remove('opacity-0', 'invisible');
-                scrollToTopBtn.classList.add('opacity-100', 'visible');
-            } else {
-                scrollToTopBtn.classList.add('opacity-0', 'invisible');
-                scrollToTopBtn.classList.remove('opacity-100', 'visible');
+            // Main navigation toggle for mobile
+            if (mobileMenuButton && navMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    navMenu.classList.toggle('hidden');
+                    navMenu.classList.toggle('flex');
+                });
             }
-        });
 
-        scrollToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            // Mobile menu toggle
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Dropdown functionality for mobile and desktop
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            dropdowns.forEach(dropdown => {
+                const button = dropdown.querySelector('button');
+                const menu = dropdown.querySelector('.dropdown-menu');
+
+                // Mobile dropdown toggle
+                if (window.innerWidth < 768 && button && menu) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        menu.classList.toggle('hidden');
+                    });
+                }
             });
         });
+
+        // Back to Top functionality
+        const backToTopBtn = document.getElementById('backToTop');
+
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('hidden');
+                } else {
+                    backToTopBtn.classList.add('hidden');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
     </script>
-    
+
     @stack('scripts')
 </body>
 </html>

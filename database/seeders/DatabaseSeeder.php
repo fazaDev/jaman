@@ -22,11 +22,26 @@ class DatabaseSeeder extends Seeder
 
         // Create admin user for Filament
         $this->call(AdminUserSeeder::class);
-        
+
+        // Update existing users role
+        $this->call(UpdateExistingUsersRoleSeeder::class);
+
+        // Create categories
+        $this->call(CategorySeeder::class);
+
         // Create sample pages
         $this->call(PageSeeder::class);
-        
+
         // Create sample sliders
         $this->call(SliderSeeder::class);
+
+        // Create sample galleries
+        $this->call(GallerySeeder::class);
+
+        // Create sample news (should be after categories)
+        $this->call(NewsSeeder::class);
+
+        // Create settings
+        $this->call(SettingSeeder::class);
     }
 }

@@ -21,21 +21,23 @@ class SlidersTable
                 ImageColumn::make('image_path')
                     ->label('Image')
                     ->size(80)
-                    ->square(),
-                    
+                    ->square()
+                    ->disk('public')
+                    ->visibility('public'),
+
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable()
-                    ->description(fn (Slider $record): string => 
+                    ->description(fn (Slider $record): string =>
                         $record->description ? \Illuminate\Support\Str::limit($record->description, 50) : ''
                     ),
-                    
+
                 TextColumn::make('button_text')
                     ->label('Button')
                     ->badge()
                     ->color('primary')
                     ->default('No button'),
-                    
+
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -44,12 +46,12 @@ class SlidersTable
                     })
                     ->formatStateUsing(fn (string $state): string => Slider::getStatusOptions()[$state] ?? $state)
                     ->sortable(),
-                    
+
                 TextColumn::make('sort_order')
                     ->label('Order')
                     ->sortable()
                     ->alignCenter(),
-                    
+
                 IconColumn::make('button_new_tab')
                     ->label('New Tab')
                     ->boolean()
@@ -57,12 +59,12 @@ class SlidersTable
                     ->falseIcon('heroicon-o-arrow-right')
                     ->trueColor('primary')
                     ->falseColor('gray'),
-                    
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

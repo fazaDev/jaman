@@ -52,6 +52,19 @@ class Slider extends Model
     }
 
     /**
+     * Scope to get sliders with local images only.
+     */
+    public function scopeLocalImages($query)
+    {
+        return $query->where(function ($q) {
+            $q->whereNotNull('image_path')
+              ->where('image_path', '!=', '')
+              ->where('image_path', 'NOT LIKE', 'http://%')
+              ->where('image_path', 'NOT LIKE', 'https://%');
+        });
+    }
+
+    /**
      * Get available status options.
      */
     public static function getStatusOptions(): array
@@ -63,14 +76,15 @@ class Slider extends Model
     }
 
     /**
-     * Get the full URL for the image.
+     * Get the full URL for the image (local storage only).
      */
     public function getImageUrlAttribute(): string
     {
-        if (str_starts_with($this->image_path, 'http')) {
-            return $this->image_path;
+        // Only return local storage URLs, ignore external URLs
+        if (empty($this->image_path) || str_starts_with($this->image_path, 'http')) {
+            return '';
         }
-        
+
         return Storage::url($this->image_path);
     }
 

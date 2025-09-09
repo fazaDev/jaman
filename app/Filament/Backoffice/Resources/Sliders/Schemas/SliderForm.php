@@ -28,22 +28,24 @@ class SliderForm
                                     ->maxLength(255)
                                     ->columnSpan(2),
                             ]),
-                            
+
                         Textarea::make('description')
                             ->rows(3)
                             ->columnSpanFull(),
-                            
+
                         FileUpload::make('image_path')
-                            ->label('Slider Image')
+                            ->label('Slider Image (Local Storage Only)')
                             ->image()
                             ->disk('public')
                             ->directory('sliders')
                             ->visibility('public')
                             ->required()
                             ->columnSpanFull()
-                            ->helperText('Upload an image for the slider (recommended: 1200x600px)'),
+                            ->acceptsFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
+                            ->maxSize(5120) // 5MB max
+                            ->helperText('Upload an image for the slider (recommended: 1200x600px, max 5MB). Only local storage images will be displayed.'),
                     ]),
-                    
+
                 Section::make('Button Settings')
                     ->schema([
                         Grid::make(3)
@@ -51,18 +53,18 @@ class SliderForm
                                 TextInput::make('button_text')
                                     ->maxLength(255)
                                     ->placeholder('e.g., Learn More'),
-                                    
+
                                 TextInput::make('button_url')
                                     // ->url()
                                     ->placeholder('https://example.com'),
-                                    
+
                                 Toggle::make('button_new_tab')
                                     ->label('Open in new tab')
                                     ->default(false),
                             ]),
                     ])
                     ->collapsible(),
-                    
+
                 Section::make('Display Settings')
                     ->schema([
                         Grid::make(2)
@@ -71,14 +73,14 @@ class SliderForm
                                     ->options(Slider::getStatusOptions())
                                     ->default('active')
                                     ->required(),
-                                    
+
                                 TextInput::make('sort_order')
                                     ->numeric()
                                     ->default(0)
                                     ->helperText('Lower numbers appear first'),
                             ]),
                     ]),
-                    
+
                 Section::make('Advanced Settings')
                     ->schema([
                         Repeater::make('settings')
@@ -96,7 +98,7 @@ class SliderForm
                                         '0.7' => '70%',
                                     ])
                                     ->default('0.5'),
-                                    
+
                                 Select::make('text_position')
                                     ->label('Text Position')
                                     ->options([
@@ -105,7 +107,7 @@ class SliderForm
                                         'right' => 'Right',
                                     ])
                                     ->default('center'),
-                                    
+
                                 Select::make('animation_type')
                                     ->label('Animation Type')
                                     ->options([

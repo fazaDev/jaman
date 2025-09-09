@@ -42,6 +42,13 @@ class Page extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['icon'];
+
+    /**
      * Boot the model.
      */
     protected static function boot()
@@ -162,5 +169,83 @@ class Page extends Model
         }
 
         return '/' . implode('/', $path);
+    }
+
+    /**
+     * Get the appropriate icon for this page.
+     */
+    public function getIconAttribute(): string
+    {
+        $iconMap = [
+            // About/Profile related
+            'about' => 'fas fa-info-circle',
+            'tentang-kami' => 'fas fa-info-circle',
+            'profil' => 'fas fa-info-circle',
+            'profile' => 'fas fa-info-circle',
+
+            // Contact related
+            'contact' => 'fas fa-headset',
+            'kontak' => 'fas fa-headset',
+
+            // Services related
+            'services' => 'fas fa-building',
+            'layanan' => 'fas fa-building',
+            'pelayanan' => 'fas fa-building',
+            'bidang' => 'fas fa-building',
+
+            // Vision/Mission
+            'vision' => 'fas fa-eye',
+            'visi' => 'fas fa-eye',
+            'visi-misi' => 'fas fa-eye',
+            'mission' => 'fas fa-bullseye',
+            'misi' => 'fas fa-bullseye',
+
+            // History
+            'history' => 'fas fa-history',
+            'sejarah' => 'fas fa-history',
+
+            // Organization
+            'structure' => 'fas fa-sitemap',
+            'struktur' => 'fas fa-sitemap',
+            'struktur-organisasi' => 'fas fa-sitemap',
+            'organisasi' => 'fas fa-sitemap',
+
+            // Team/Staff
+            'team' => 'fas fa-users',
+            'tim' => 'fas fa-users',
+            'pegawai' => 'fas fa-users',
+            'staff' => 'fas fa-users',
+
+            // News/Information
+            'news' => 'fas fa-newspaper',
+            'berita' => 'fas fa-newspaper',
+            'informasi' => 'fas fa-info',
+            'pengumuman' => 'fas fa-bullhorn',
+
+            // Gallery
+            'gallery' => 'fas fa-images',
+            'galeri' => 'fas fa-images',
+            'foto' => 'fas fa-camera',
+            'video' => 'fas fa-video',
+
+            // Programs
+            'program' => 'fas fa-tasks',
+            'kegiatan' => 'fas fa-calendar-alt',
+            'agenda' => 'fas fa-calendar',
+
+            // Documents
+            'document' => 'fas fa-file-alt',
+            'dokumen' => 'fas fa-file-alt',
+            'publikasi' => 'fas fa-book',
+            'laporan' => 'fas fa-file-pdf',
+
+            // Other
+            'pengaduan' => 'fas fa-exclamation-triangle',
+            'perizinan' => 'fas fa-certificate',
+            'data' => 'fas fa-chart-bar',
+            'statistik' => 'fas fa-chart-line',
+        ];
+
+        return $iconMap[$this->slug] ?? 'fas fa-file-alt';
     }
 }
