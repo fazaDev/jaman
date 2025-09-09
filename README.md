@@ -1,61 +1,232 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Filament PUPR CMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive Content Management System built with Laravel and Filament for Indonesian government websites, specifically designed for Kementerian Pekerjaan Umum dan Perumahan Rakyat (PUPR).
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Admin Panel (Filament 4)
+- **User Management**: Role-based access control with admin, moderator, and user roles
+- **Content Management**: 
+  - News articles with categories and featured content
+  - Static pages with hierarchical structure
+  - Image gallery with multi-media support
+  - Homepage sliders with customizable settings
+- **Settings**: Configurable site settings and metadata
+- **File Management**: Organized file uploads with public storage
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Frontend
+- **Modern Design**: Indonesian government web style guidelines
+- **Responsive Layout**: Mobile-first design with Tailwind CSS
+- **SEO Optimized**: Meta tags, structured URLs, and clean markup
+- **Performance**: Optimized images and efficient queries
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Technical Features
+- **Laravel 12.0**: Latest Laravel framework
+- **Filament 4**: Modern admin panel
+- **SQLite Database**: Lightweight database solution
+- **File Storage**: Public disk with symlinked storage
+- **Image Processing**: Smart image handling for uploads
+- **Multi-environment**: Development and production configurations
 
-## Learning Laravel
+## Requirements
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- NPM or Yarn
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/filament-pupr.git
+   cd filament-pupr
+   ```
 
-## Laravel Sponsors
+2. **Install PHP dependencies**:
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Install Node.js dependencies**:
+   ```bash
+   npm install
+   ```
 
-### Premium Partners
+4. **Environment setup**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5. **Database setup**:
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+
+6. **Storage setup**:
+   ```bash
+   php artisan storage:link
+   ```
+
+7. **Build frontend assets**:
+   ```bash
+   npm run build
+   ```
+
+## Development
+
+1. **Start development server**:
+   ```bash
+   php artisan serve
+   ```
+
+2. **Start frontend development**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Access admin panel**:
+   - URL: `http://localhost:8000/backoffice`
+   - Default admin: `admin@example.com` / `password`
+
+## Project Structure
+
+```
+app/
+├── Filament/Backoffice/Resources/     # Filament admin resources
+│   ├── Categories/                   # Category management
+│   ├── News/                         # News management
+│   ├── Pages/                        # Static pages
+│   ├── Galleries/                    # Gallery management
+│   ├── Sliders/                      # Homepage sliders
+│   ├── Settings/                     # Site settings
+│   └── Users/                        # User management
+├── Http/Controllers/                 # Frontend controllers
+├── Models/                           # Eloquent models
+└── Console/Commands/                 # Custom artisan commands
+
+resources/
+├── views/frontend/                   # Frontend templates
+│   ├── layouts/                      # Layout templates
+│   ├── pages/                        # Static page views
+│   ├── news/                         # News views
+│   ├── gallery/                      # Gallery views
+│   └── home.blade.php                # Homepage
+└── css/                              # Stylesheets
+
+database/
+├── migrations/                       # Database migrations
+└── seeders/                          # Database seeders
+```
+
+## Configuration
+
+### Environment Variables
+
+Key environment variables in `.env`:
+
+```env
+APP_NAME="PUPR CMS"
+APP_URL=http://localhost:8000
+FILESYSTEM_DISK=public
+DB_CONNECTION=sqlite
+```
+
+### File Storage
+
+Files are stored in `storage/app/public/` with the following structure:
+- `sliders/` - Homepage slider images
+- `gallery/` - Gallery images and videos
+- `pages/` - Page featured images
+- `settings/` - Site logos and assets
+
+## Features Overview
+
+### News Management
+- Create and edit news articles
+- Category organization
+- Featured articles
+- SEO-friendly URLs
+- Author attribution
+- Publication scheduling
+
+### Page Management
+- Hierarchical page structure
+- Parent-child relationships
+- Custom page templates
+- SEO metadata
+- Featured images
+
+### Gallery Management
+- Multi-media support (images/videos)
+- Tagging system
+- Status management
+- Responsive display
+- Thumbnail generation
+
+### Slider Management
+- Homepage hero sliders
+- Custom button actions
+- Animation settings
+- Overlay controls
+- Sort ordering
+
+### User Management
+- Role-based permissions
+- Admin/Moderator/User roles
+- Profile management
+- Secure authentication
+
+## API Endpoints
+
+The application provides web routes for:
+
+- `/` - Homepage
+- `/news` - News listing
+- `/news/{slug}` - News article
+- `/gallery` - Gallery
+- `/pages/{slug}` - Static pages
+- `/backoffice` - Admin panel
+
+## Testing
+
+Run the test suite:
+
+```bash
+php artisan test
+```
+
+Or using Pest:
+
+```bash
+./vendor/bin/pest
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Code of Conduct
+## Security
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover any security vulnerabilities, please send an e-mail to the project maintainer.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Credits
+
+- Built with [Laravel](https://laravel.com/)
+- Admin panel powered by [Filament](https://filamentphp.com/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons from [Heroicons](https://heroicons.com/)
+
+## Support
+
+For support and questions, please open an issue on GitHub or contact the development team.
