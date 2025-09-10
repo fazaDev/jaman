@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', setting('site.title', 'Website Pemerintah'))</title>
-    <meta name="description" content="@yield('description', setting('site.description', 'Website resmi pemerintah'))">
-    <meta name="keywords" content="@yield('keywords', setting('site.keywords', 'pemerintah, indonesia'))">
+    <title>@yield('title', setting('seo_meta_title', setting('site_name', 'Website Pemerintah')))</title>
+    <meta name="description" content="@yield('description', setting('seo_meta_description', setting('site_description', 'Website resmi pemerintah')))">
+    <meta name="keywords" content="@yield('keywords', setting('seo_keywords', setting('site_keywords', 'pemerintah, indonesia')))">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="@yield('title', setting('site.title', 'Website Pemerintah'))">
-    <meta property="og:description" content="@yield('description', setting('site.description', 'Website resmi pemerintah'))">
+    <meta property="og:title" content="@yield('title', setting('seo_meta_title', setting('site_name', 'Website Pemerintah')))">
+    <meta property="og:description" content="@yield('description', setting('seo_meta_description', setting('site_description', 'Website resmi pemerintah')))">
     <meta property="og:image" content="@yield('og_image', asset('images/og-default.jpg'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
@@ -98,14 +98,25 @@
     <div class="bg-blue-800 text-white py-2 px-4">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
             <div class="text-sm mb-2 md:mb-0">
-                <span class="mr-4"><i class="fas fa-phone-alt mr-1"></i> {{ setting('contact.phone', '(0741) 1234567') }}</span>
-                <span><i class="fas fa-envelope mr-1"></i> {{ setting('contact.email', 'pupr@jambiprov.go.id') }}</span>
+                <span class="mr-4"><i class="fas fa-phone-alt mr-1"></i> {{ setting('contact_phone', '(0741) 1234567') }}</span>
+                <span><i class="fas fa-envelope mr-1"></i> {{ setting('contact_email', 'pupr@jambiprov.go.id') }}</span>
             </div>
             <div class="flex space-x-4">
-                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-white hover:text-yellow-300"><i class="fab fa-youtube"></i></a>
+                @if(setting('social_facebook'))
+                <a href="{{ setting('social_facebook') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                @endif
+                @if(setting('social_twitter'))
+                <a href="{{ setting('social_twitter') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-twitter"></i></a>
+                @endif
+                @if(setting('social_instagram'))
+                <a href="{{ setting('social_instagram') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-instagram"></i></a>
+                @endif
+                @if(setting('social_youtube'))
+                <a href="{{ setting('social_youtube') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-youtube"></i></a>
+                @endif
+                @if(setting('social_linkedin'))
+                <a href="{{ setting('social_linkedin') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                @endif
             </div>
         </div>
     </div>
@@ -114,10 +125,10 @@
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
             <div class="flex items-center mb-4 md:mb-0">
-                <img src="{{ asset('images/logo-ok1.png') }}" alt="PUPR Logo" class="h-16 mr-4">
+                <img src="{{ asset(setting('site_logo', 'images/logo-pemprov.png')) }}" alt="{{ setting('site_name', 'PUPR Logo') }}" class="h-16 mr-4">
                 <div>
-                    <h1 class="text-2xl font-bold text-blue-800">{{ strtoupper(setting('site.title', 'PEMERINTAH PROVINSI JAMBI')) }}</h1>
-                    <p class="text-sm text-gray-600">{{ setting('site.subtitle', 'Dinas Pekerjaan Umum dan Perumahan Rakyat') }}</p>
+                    <h1 class="text-2xl font-bold text-blue-800">{{ strtoupper(setting('site_name', 'PEMERINTAH PROVINSI JAMBI')) }}</h1>
+                    <p class="text-sm text-gray-600">{{ setting('site_description', 'Dinas Pekerjaan Umum dan Perumahan Rakyat') }}</p>
                 </div>
             </div>
             <div class="relative">
@@ -177,13 +188,13 @@
                         <i class="fas fa-newspaper mr-2"></i> Berita
                     </a>
 
-                    <a href="#" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center">
+                    <!-- <a href="#" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center">
                         <i class="fas fa-chart-line mr-2"></i> Data & Statistik
                     </a>
 
                     <a href="#" class="py-3 px-4 hover:bg-blue-800 font-medium flex items-center">
                         <i class="fas fa-file-alt mr-2"></i> Publikasi
-                    </a>
+                    </a> -->
 
                     @if(isset($mainMenuPages) && $mainMenuPages->where('slug', 'contact')->count() == 0)
                         <!-- Show contact link if not in dynamic menu -->
@@ -251,34 +262,45 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 <div>
                     <h4 class="text-xl font-bold mb-4 text-yellow-400">Tentang Kami</h4>
-                    <p class="text-sm mb-4">{{ setting('site.title', 'Dinas PUPR') }} Provinsi Jambi berkomitmen untuk mewujudkan Jambi Mantap melalui berbagai program pembangunan infrastruktur dan perumahan rakyat.</p>
+                    <p class="text-sm mb-4">{{ setting('site_description', 'Dinas PUPR Provinsi Jambi berkomitmen untuk mewujudkan Jambi Mantap melalui berbagai program pembangunan infrastruktur dan perumahan rakyat.') }}</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-youtube"></i></a>
+                        @if(setting('social_facebook'))
+                        <a href="{{ setting('social_facebook') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        @endif
+                        @if(setting('social_twitter'))
+                        <a href="{{ setting('social_twitter') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-twitter"></i></a>
+                        @endif
+                        @if(setting('social_instagram'))
+                        <a href="{{ setting('social_instagram') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-instagram"></i></a>
+                        @endif
+                        @if(setting('social_youtube'))
+                        <a href="{{ setting('social_youtube') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-youtube"></i></a>
+                        @endif
+                        @if(setting('social_linkedin'))
+                        <a href="{{ setting('social_linkedin') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        @endif
                     </div>
                 </div>
 
                 <div>
                     <h4 class="text-xl font-bold mb-4 text-yellow-400">Link Terkait</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Kementerian Dalam Negeri</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Badan Pusat Statistik</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Kementerian PUPR</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">BPK RI</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Pemerintah Provinsi Jambi</a></li>
+                        <li><a href="{{ setting('links.ministry_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('links.ministry_name', 'Kementerian Dalam Negeri') }}</a></li>
+                        <li><a href="{{ setting('links.statistics_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('links.statistics_name', 'Badan Pusat Statistik') }}</a></li>
+                        <li><a href="{{ setting('links.pupr_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('links.pupr_name', 'Kementerian PUPR') }}</a></li>
+                        <li><a href="{{ setting('links.bpk_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('links.bpk_name', 'BPK RI') }}</a></li>
+                        <li><a href="{{ setting('links.province_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('links.province_name', 'Pemerintah Provinsi Jambi') }}</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="text-xl font-bold mb-4 text-yellow-400">Layanan Publik</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Pengaduan Masyarakat</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Perizinan Online</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Data Terbuka</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">E-Government</a></li>
-                        <li><a href="#" class="text-white hover:text-yellow-400 text-sm">Lowongan Kerja</a></li>
+                        <li><a href="{{ setting('services.complaint_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('services.complaint_name', 'Pengaduan Masyarakat') }}</a></li>
+                        <li><a href="{{ setting('services.licensing_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('services.licensing_name', 'Perizinan Online') }}</a></li>
+                        <li><a href="{{ setting('services.opendata_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('services.opendata_name', 'Data Terbuka') }}</a></li>
+                        <li><a href="{{ setting('services.egov_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('services.egov_name', 'E-Government') }}</a></li>
+                        <li><a href="{{ setting('services.jobs_link', '#') }}" class="text-white hover:text-yellow-400 text-sm">{{ setting('services.jobs_name', 'Lowongan Kerja') }}</a></li>
                     </ul>
                 </div>
 
@@ -287,19 +309,19 @@
                     <ul class="space-y-3">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt mt-1 mr-3 text-yellow-400"></i>
-                            <span class="text-sm">{{ setting('contact.address', 'Jl. Jend. A. Yani No. 1, Jambi') }}</span>
+                            <span class="text-sm">{{ setting('contact_address', 'Jl. Jend. A. Yani No. 1, Jambi') }}</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-phone-alt mr-3 text-yellow-400"></i>
-                            <span class="text-sm">{{ setting('contact.phone', '(0741) 1234567') }}</span>
+                            <span class="text-sm">{{ setting('contact_phone', '(0741) 1234567') }}</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-envelope mr-3 text-yellow-400"></i>
-                            <span class="text-sm">{{ setting('contact.email', 'pupr@jambiprov.go.id') }}</span>
+                            <span class="text-sm">{{ setting('contact_email', 'pupr@jambiprov.go.id') }}</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-clock mr-3 text-yellow-400"></i>
-                            <span class="text-sm">Senin-Jumat: 08.00-16.00 WIB</span>
+                            <span class="text-sm">{{ setting('contact.hours', 'Senin-Jumat: 08.00-16.00 WIB') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -308,11 +330,11 @@
             <div class="border-t border-blue-800 pt-6">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-4 md:mb-0">
-                        <img src="{{ asset('images/logo-garuda.png') }}" alt="Logo" class="h-12">
+                        <img src="{{ asset(setting('site_logo', 'images/logo-pemprov.png')) }}" alt="{{ setting('site_name', 'Logo') }}" class="h-12">
                     </div>
                     <div class="text-sm text-center md:text-right">
-                        <p>&copy; {{ date('Y') }} {{ setting('site.title', 'Dinas PUPR') }} Provinsi Jambi. Seluruh hak cipta dilindungi.</p>
-                        <p class="mt-1">Dikembangkan oleh Tim IT {{ setting('site.title', 'PUPR') }} Provinsi Jambi</p>
+                        <p>&copy; {{ date('Y') }} {{ setting('site_name', 'Dinas PUPR') }} {{ setting('site.location', 'Provinsi Jambi') }}. {{ setting('site.copyright', 'Seluruh hak cipta dilindungi.') }}</p>
+                        <p class="mt-1">{{ setting('site.developer_credit', 'Dikembangkan oleh Tim IT PUPR Provinsi Jambi') }}</p>
                     </div>
                 </div>
             </div>

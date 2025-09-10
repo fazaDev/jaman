@@ -1,13 +1,13 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Beranda - ' . setting('site.title', 'Website Pemerintah'))
-@section('description', setting('site.description', 'Website resmi pemerintah yang menyediakan informasi dan layanan kepada masyarakat'))
+@section('title', setting('seo_meta_title', 'Beranda - ' . setting('site_name', 'Website Pemerintah')))
+@section('description', setting('seo_meta_description', setting('site_description', 'Website resmi pemerintah yang menyediakan informasi dan layanan kepada masyarakat')))
 
 @section('content')
 <!-- Hero Slider -->
 @if(isset($sliders) && $sliders->count() > 0)
 <!-- Dynamic Hero Slider -->
-<div class="hero-slider relative overflow-hidden" style="height: calc(100vh - 140px);" id="heroSlider">
+<div class="hero-slider relative overflow-hidden" style="height: calc(100vh - 240px);" id="heroSlider">
     @foreach($sliders as $index => $slider)
     <div class="slider-item absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" data-slide="{{ $index }}">
         @if($slider->image_path && !Str::startsWith($slider->image_path, ['http://', 'https://']))
@@ -19,9 +19,10 @@
         @endif
 
         <!-- Slider Content Overlay -->
-        @if($slider->title || $slider->description)
-        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-            <div class="text-center text-white px-4 max-w-4xl">
+        <!-- @if($slider->title || $slider->description)
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="absolute inset-0 backdrop-blur-[2px] bg-black bg-opacity-10"></div>
+            <div class="text-center text-white px-4 max-w-4xl relative z-10">
                 @if($slider->title)
                 <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg">{{ $slider->title }}</h1>
                 @endif
@@ -37,7 +38,7 @@
                 @endif
             </div>
         </div>
-        @endif
+        @endif -->
     </div>
     @endforeach
 
@@ -65,8 +66,8 @@
 <div class="hero-slider bg-gray-200 relative overflow-hidden" style="height: calc(100vh - 140px);">
     <div class="w-full h-full government-gradient garuda-pattern flex items-center justify-center">
         <div class="text-center text-white">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Selamat Datang</h1>
-            <p class="text-xl md:text-2xl text-blue-100">Website Resmi {{ setting('site.title', 'PUPR Provinsi Jambi') }}</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('site_name', 'Selamat Datang') }}</h1>
+            <p class="text-xl md:text-2xl text-blue-100">{{ setting('site_description', 'Website Resmi PUPR Provinsi Jambi') }}</p>
         </div>
     </div>
 </div>
@@ -235,7 +236,7 @@
                             <i class="fas fa-bullhorn"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Penerimaan CPNS {{ setting('site.title', 'PUPR') }} {{ date('Y') }}</h4>
+                            <h4 class="font-bold text-blue-800 mb-1">Penerimaan CPNS {{ setting('site_name', 'PUPR') }} {{ date('Y') }}</h4>
                             <p class="text-gray-600 text-sm mb-2">Pendaftaran Calon Pegawai Negeri Sipil akan dibuka sesuai jadwal yang telah ditetapkan pemerintah.</p>
                             <span class="text-xs text-blue-800">{{ now()->format('d M Y') }}</span>
                         </div>
@@ -286,7 +287,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-blue-800 mb-1">Rapat Koordinasi Pembangunan Daerah</h4>
-                            <p class="text-gray-600 text-sm mb-2">Kantor {{ setting('site.title', 'PUPR') }}, Jambi | 09.00-12.00 WIB</p>
+                            <p class="text-gray-600 text-sm mb-2">Kantor {{ setting('site_name', 'PUPR') }}, Jambi | 09.00-12.00 WIB</p>
                             <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Pemerintahan</span>
                         </div>
                     </div>
@@ -313,7 +314,7 @@
                             <span class="text-xs">{{ strtoupper(now()->addDays(15)->format('M')) }}</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Pelatihan Teknis {{ setting('site.title', 'PUPR') }}</h4>
+                            <h4 class="font-bold text-blue-800 mb-1">Pelatihan Teknis {{ setting('site_name', 'PUPR') }}</h4>
                             <p class="text-gray-600 text-sm mb-2">Gedung Pelatihan, Jambi | 13.00-16.00 WIB</p>
                             <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Pelatihan</span>
                         </div>
@@ -327,24 +328,24 @@
 <!-- Statistics -->
 <div class="bg-blue-800 text-white py-12">
     <div class="container mx-auto px-4">
-        <h3 class="text-2xl font-bold text-center mb-8">Data & Statistik Provinsi Jambi</h3>
+        <h3 class="text-2xl font-bold text-center mb-8">{{ setting('stats.title', 'Data & Statistik Provinsi Jambi') }}</h3>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="bg-blue-700 rounded-lg p-6 text-center">
                 <div class="text-4xl font-bold mb-2">{{ setting('stats.districts', '11') }}</div>
-                <div class="text-sm">Kabupaten/Kota</div>
+                <div class="text-sm">{{ setting('stats.districts_label', 'Kabupaten/Kota') }}</div>
             </div>
             <div class="bg-blue-700 rounded-lg p-6 text-center">
                 <div class="text-4xl font-bold mb-2">{{ setting('stats.population', '3.6') }}</div>
-                <div class="text-sm">Juta Penduduk</div>
+                <div class="text-sm">{{ setting('stats.population_label', 'Juta Penduduk') }}</div>
             </div>
             <div class="bg-blue-700 rounded-lg p-6 text-center">
                 <div class="text-4xl font-bold mb-2">{{ setting('stats.growth', '5.2') }}%</div>
-                <div class="text-sm">Pertumbuhan Ekonomi</div>
+                <div class="text-sm">{{ setting('stats.growth_label', 'Pertumbuhan Ekonomi') }}</div>
             </div>
             <div class="bg-blue-700 rounded-lg p-6 text-center">
                 <div class="text-4xl font-bold mb-2">{{ setting('stats.tourists', '2.1') }}</div>
-                <div class="text-sm">Juta Wisatawan</div>
+                <div class="text-sm">{{ setting('stats.tourists_label', 'Juta Wisatawan') }}</div>
             </div>
         </div>
 
@@ -399,7 +400,7 @@
                         </div>
                     </div>
                     <div class="p-4">
-                        <h4 class="font-bold text-blue-800 mb-2">Profil {{ setting('site.title', 'PUPR') }}</h4>
+                        <h4 class="font-bold text-blue-800 mb-2">{{ setting('site_name', 'Profil PUPR') }}</h4>
                         <p class="text-gray-600 text-sm">{{ now()->format('d M Y') }} | 1.245 views</p>
                     </div>
                 </div>
@@ -427,7 +428,7 @@
                         </div>
                     </div>
                     <div class="p-4">
-                        <h4 class="font-bold text-blue-800 mb-2">Sosialisasi Program {{ setting('site.title', 'PUPR') }}</h4>
+                        <h4 class="font-bold text-blue-800 mb-2">Sosialisasi Program {{ setting('site_name', 'PUPR') }}</h4>
                         <p class="text-gray-600 text-sm">{{ now()->subDays(5)->format('d M Y') }} | 3.102 views</p>
                     </div>
                 </div>
@@ -438,7 +439,7 @@
 
 @endsection
 
-@push('scripts')
+@push('styles')
 <style>
 /* Hero Slider Styles */
 .hero-slider {
@@ -537,7 +538,9 @@
     }
 }
 </style>
+@endpush
 
+@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const slider = document.getElementById('heroSlider');

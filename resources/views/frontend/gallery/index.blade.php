@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Galeri - ' . setting('site.title', 'Website Pemerintah'))
-@section('description', 'Galeri foto dan video dokumentasi kegiatan ' . setting('site.title', 'Website Pemerintah'))
+@section('title', 'Galeri - ' . setting('site_name', 'Website Pemerintah'))
+@section('description', 'Galeri foto dan video dokumentasi kegiatan ' . setting('site_name', 'Website Pemerintah'))
 
 @section('content')
 <!-- Page Header -->
@@ -12,7 +12,7 @@
                 <i class="fas fa-images text-yellow-400 mr-3"></i>
                 Galeri
             </h1>
-            <p class="text-lg text-blue-100">Dokumentasi kegiatan dan momen penting {{ setting('site.title', 'PUPR Provinsi Jambi') }}</p>
+            <p class="text-lg text-blue-100">Dokumentasi kegiatan dan momen penting {{ setting('site_name', 'PUPR Provinsi Jambi') }}</p>
         </div>
     </div>
 </section>

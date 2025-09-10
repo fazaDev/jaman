@@ -3,22 +3,22 @@
 namespace App\Filament\Backoffice\Resources\Pages\Schemas;
 
 use App\Models\Page;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
+use Filament\Actions\Action;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 
 class PageForm
 {
-    public static function configure(Form $form): Form
+    public static function configure(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Page Content')
                     ->schema([
@@ -40,7 +40,7 @@ class PageForm
                                     ->rules(['alpha_dash'])
                                     ->helperText('URL-friendly version of the title')
                                     ->suffixAction(
-                                        \Filament\Forms\Components\Actions\Action::make('regenerateSlug')
+                                        Action::make('regenerateSlug')
                                             ->icon('heroicon-m-arrow-path')
                                             ->action(function (callable $set, callable $get) {
                                                 $title = $get('title');

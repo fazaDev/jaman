@@ -180,7 +180,7 @@ class Page extends Model
             // About/Profile related
             'about' => 'fas fa-info-circle',
             'tentang-kami' => 'fas fa-info-circle',
-            'profil' => 'fas fa-info-circle',
+            'profil' => 'fas fa-building-columns',
             'profile' => 'fas fa-info-circle',
 
             // Contact related

@@ -41,7 +41,7 @@ class SliderForm
                             ->visibility('public')
                             ->required()
                             ->columnSpanFull()
-                            ->acceptsFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
                             ->maxSize(5120) // 5MB max
                             ->helperText('Upload an image for the slider (recommended: 1200x600px, max 5MB). Only local storage images will be displayed.'),
                     ]),
