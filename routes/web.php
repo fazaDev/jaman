@@ -5,9 +5,23 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AgendaController;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Announcements routes
+Route::prefix('pengumuman')->name('announcements.')->group(function () {
+    Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+    Route::get('/{slug}', [AnnouncementController::class, 'show'])->name('show');
+});
+
+// Agendas routes
+Route::prefix('agenda')->name('agendas.')->group(function () {
+    Route::get('/', [AgendaController::class, 'index'])->name('index');
+    Route::get('/{slug}', [AgendaController::class, 'show'])->name('show');
+});
 
 // News routes
 Route::prefix('berita')->name('news.')->group(function () {

@@ -15,33 +15,39 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         // Create admin user for Filament
         $this->call(AdminUserSeeder::class);
 
         // Update existing users role
-        $this->call(UpdateExistingUsersRoleSeeder::class);
+        // $this->call(UpdateExistingUsersRoleSeeder::class);
 
         // Create categories
-        $this->call(CategorySeeder::class);
+        // $this->call(CategorySeeder::class);
 
         // Create sample pages
-        $this->call(PageSeeder::class);
+        // $this->call(PageSeeder::class);
 
         // Create sample sliders
-        $this->call(SliderSeeder::class);
+        // $this->call(SliderSeeder::class);
 
         // Create sample galleries
-        $this->call(GallerySeeder::class);
+        // $this->call(GallerySeeder::class);
 
         // Create sample news (should be after categories)
-        $this->call(NewsSeeder::class);
+        // $this->call(NewsSeeder::class);
 
         // Create settings
-        $this->call(SettingSeeder::class);
+        // $this->call(SettingSeeder::class);
+
+        // Create sample announcements
+        // $this->call(AnnouncementSeeder::class);
+
+        // Create sample agendas
+        // $this->call(AgendaSeeder::class);
     }
 }

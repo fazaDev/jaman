@@ -17,25 +17,25 @@ class SettingSeeder extends Seeder
             // General Settings
             [
                 'key' => 'site_name',
-                'value' => 'PUPR Portal',
+                'value' => 'Dinas Pekerjaan Umum dan Prumahan Rakyat Provinsi Jambi',
                 'type' => 'text',
                 'group' => 'general',
-                'description' => 'Name of the website',
+                'description' => 'Nama website',
                 'is_public' => true,
                 'sort_order' => 1,
             ],
             [
                 'key' => 'site_description',
-                'value' => 'Portal Resmi Kementerian Pekerjaan Umum dan Perumahan Rakyat',
+                'value' => 'Pemerintah Provinsi Jambi',
                 'type' => 'textarea',
                 'group' => 'general',
-                'description' => 'Brief description of the website',
+                'description' => 'Deskripsi singkat tentang website',
                 'is_public' => true,
                 'sort_order' => 2,
             ],
             [
                 'key' => 'site_logo',
-                'value' => '/images/logo.png',
+                'value' => '/images/logo-pemprov.png',
                 'type' => 'file',
                 'group' => 'general',
                 'description' => 'Website logo',
@@ -47,7 +47,7 @@ class SettingSeeder extends Seeder
                 'value' => 'false',
                 'type' => 'boolean',
                 'group' => 'general',
-                'description' => 'Enable maintenance mode',
+                'description' => 'Pemencegahan akses publik saat pemeliharaan',
                 'is_public' => false,
                 'sort_order' => 4,
             ],
@@ -55,10 +55,10 @@ class SettingSeeder extends Seeder
             // Contact Information
             [
                 'key' => 'contact_address',
-                'value' => 'Jl. Pattimura No. 20, Jakarta Selatan 12110',
+                'value' => 'Jl. H. Agus Salim No. 2, Kota Baru, Kota Jambi, Jambi 36128',
                 'type' => 'textarea',
                 'group' => 'contact',
-                'description' => 'Office address',
+                'description' => 'Alamat lengkap',
                 'is_public' => true,
                 'sort_order' => 1,
             ],
@@ -73,10 +73,10 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'contact_email',
-                'value' => 'info@pu.go.id',
+                'value' => 'humaspuprprovinsijambi@gmail.com',
                 'type' => 'text',
                 'group' => 'contact',
-                'description' => 'Primary email address',
+                'description' => 'Alamat email',
                 'is_public' => true,
                 'sort_order' => 3,
             ],
@@ -93,7 +93,7 @@ class SettingSeeder extends Seeder
             // Social Media
             [
                 'key' => 'social_facebook',
-                'value' => 'https://facebook.com/kemenpu',
+                'value' => 'https://www.facebook.com/dinaspuprovinsijambi/',
                 'type' => 'text',
                 'group' => 'social',
                 'description' => 'Facebook page URL',
@@ -102,7 +102,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'social_twitter',
-                'value' => 'https://twitter.com/kemenpu',
+                'value' => 'http://twitter.com/@DINASPUPRJAMBI',
                 'type' => 'text',
                 'group' => 'social',
                 'description' => 'Twitter profile URL',
@@ -111,7 +111,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'social_instagram',
-                'value' => 'https://instagram.com/kemenpu',
+                'value' => 'https://www.instagram.com/dinaspuprovinsijambi/',
                 'type' => 'text',
                 'group' => 'social',
                 'description' => 'Instagram profile URL',
@@ -120,27 +120,18 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'social_youtube',
-                'value' => 'https://youtube.com/kemenpu',
+                'value' => 'https://www.youtube.com/channel/UCPOFLprnEmkqVZ8ITX4tf7A',
                 'type' => 'text',
                 'group' => 'social',
                 'description' => 'YouTube channel URL',
                 'is_public' => true,
                 'sort_order' => 4,
             ],
-            [
-                'key' => 'social_linkedin',
-                'value' => 'https://linkedin.com/company/kemenpu',
-                'type' => 'text',
-                'group' => 'social',
-                'description' => 'LinkedIn company page URL',
-                'is_public' => true,
-                'sort_order' => 5,
-            ],
 
             // SEO Settings
             [
                 'key' => 'seo_meta_title',
-                'value' => 'PUPR Portal - Kementerian Pekerjaan Umum dan Perumahan Rakyat',
+                'value' => 'Dinas Pekerjaan Umum dan Perumahan Rakyat Provinsi Jambi',
                 'type' => 'text',
                 'group' => 'seo',
                 'description' => 'Default meta title',
@@ -149,7 +140,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'seo_meta_description',
-                'value' => 'Portal resmi Kementerian Pekerjaan Umum dan Perumahan Rakyat Indonesia. Informasi terkini tentang infrastruktur, perumahan, dan pembangunan.',
+                'value' => 'Dinas Pekerjaan Umum dan Perumahan Rakyat Provinsi Jambi',
                 'type' => 'textarea',
                 'group' => 'seo',
                 'description' => 'Default meta description',
@@ -158,7 +149,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'seo_keywords',
-                'value' => 'PUPR, infrastruktur, perumahan, pembangunan, kementerian, pekerjaan umum',
+                'value' => 'PUPR, infrastruktur, perumahan, pembangunan, jambi, dinas, pemerintah',
                 'type' => 'text',
                 'group' => 'seo',
                 'description' => 'Default keywords',

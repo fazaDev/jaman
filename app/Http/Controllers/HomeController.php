@@ -6,6 +6,8 @@ use App\Models\News;
 use App\Models\Slider;
 use App\Models\Gallery;
 use App\Models\Setting;
+use App\Models\Announcement;
+use App\Models\Agenda;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -45,6 +47,18 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
+        // Get latest announcements
+        $announcements = Announcement::published()
+            ->latest('published_at')
+            ->limit(3)
+            ->get();
+
+        // Get upcoming agendas
+        $agendas = Agenda::published()
+            ->upcoming()
+            ->limit(3)
+            ->get();
+
         // Get public settings
         $settings = Setting::getPublicSettings();
 
@@ -53,6 +67,8 @@ class HomeController extends Controller
             'latestNews',
             'sliders',
             'galleryItems',
+            'announcements',
+            'agendas',
             'settings'
         ));
     }

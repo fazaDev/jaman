@@ -63,7 +63,7 @@
 </div>
 @else
 {{-- No sliders fallback --}}
-<div class="hero-slider bg-gray-200 relative overflow-hidden" style="height: calc(100vh - 140px);">
+<div class="hero-slider bg-gray-200 relative overflow-hidden" style="height: calc(100vh - 240px);">
     <div class="w-full h-full government-gradient garuda-pattern flex items-center justify-center">
         <div class="text-center text-white">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('site_name', 'Selamat Datang') }}</h1>
@@ -225,101 +225,78 @@
             <div>
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-bold text-blue-800">Pengumuman</h3>
-                    <a href="#" class="text-blue-800 hover:text-yellow-600 font-medium flex items-center">
+                    <a href="{{ route('announcements.index') }}" class="text-blue-800 hover:text-yellow-600 font-medium flex items-center">
                         Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
 
+                @forelse($announcements as $announcement)
                 <div class="bg-blue-50 rounded-lg p-4 mb-4">
                     <div class="flex items-start">
                         <div class="bg-blue-800 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
                             <i class="fas fa-bullhorn"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Penerimaan CPNS {{ setting('site_name', 'PUPR') }} {{ date('Y') }}</h4>
-                            <p class="text-gray-600 text-sm mb-2">Pendaftaran Calon Pegawai Negeri Sipil akan dibuka sesuai jadwal yang telah ditetapkan pemerintah.</p>
-                            <span class="text-xs text-blue-800">{{ now()->format('d M Y') }}</span>
+                            <h4 class="font-bold text-blue-800 mb-1">{{ $announcement->title }}</h4>
+                            <p class="text-gray-600 text-sm mb-2">{{ Str::limit($announcement->excerpt ?? $announcement->content, 100) }}</p>
+                            <span class="text-xs text-blue-800">{{ $announcement->published_at->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
-
+                @empty
                 <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                    <div class="flex items-start">
-                        <div class="bg-blue-800 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Informasi Pelayanan Publik</h4>
-                            <p class="text-gray-600 text-sm mb-2">Pelayanan publik tetap berjalan normal dengan protokol kesehatan yang ketat untuk kenyamanan masyarakat.</p>
-                            <span class="text-xs text-blue-800">{{ now()->subDays(1)->format('d M Y') }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-blue-50 rounded-lg p-4">
                     <div class="flex items-start">
                         <div class="bg-blue-800 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">
                             <i class="fas fa-info-circle"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Perubahan Jam Pelayanan</h4>
-                            <p class="text-gray-600 text-sm mb-2">Jam pelayanan berubah menjadi 08.00-15.00 WIB untuk memberikan pelayanan yang lebih optimal.</p>
-                            <span class="text-xs text-blue-800">{{ now()->subDays(2)->format('d M Y') }}</span>
+                            <h4 class="font-bold text-blue-800 mb-1">Tidak ada pengumuman</h4>
+                            <p class="text-gray-600 text-sm mb-2">Belum ada pengumuman terbaru saat ini.</p>
+                            <span class="text-xs text-blue-800">{{ now()->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
+                @endforelse
             </div>
 
             <!-- Events -->
             <div>
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-bold text-blue-800">Agenda Kegiatan</h3>
-                    <a href="#" class="text-blue-800 hover:text-yellow-600 font-medium flex items-center">
+                    <a href="{{ route('agendas.index') }}" class="text-blue-800 hover:text-yellow-600 font-medium flex items-center">
                         Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
 
+                @forelse($agendas as $agenda)
                 <div class="bg-yellow-50 rounded-lg p-4 mb-4">
                     <div class="flex items-start">
                         <div class="bg-yellow-400 text-blue-900 rounded-lg w-16 h-16 flex flex-col items-center justify-center mr-4 text-center">
-                            <span class="font-bold text-xl">{{ now()->addDays(5)->format('d') }}</span>
-                            <span class="text-xs">{{ strtoupper(now()->addDays(5)->format('M')) }}</span>
+                            <span class="font-bold text-xl">{{ $agenda->start_date->format('d') }}</span>
+                            <span class="text-xs">{{ strtoupper($agenda->start_date->format('M')) }}</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Rapat Koordinasi Pembangunan Daerah</h4>
-                            <p class="text-gray-600 text-sm mb-2">Kantor {{ setting('site_name', 'PUPR') }}, Jambi | 09.00-12.00 WIB</p>
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Pemerintahan</span>
+                            <h4 class="font-bold text-blue-800 mb-1">{{ $agenda->title }}</h4>
+                            <p class="text-gray-600 text-sm mb-2">{{ $agenda->location }} | {{ $agenda->start_date->format('H:i') }} WIB</p>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{{ ucfirst($agenda->status) }}</span>
                         </div>
                     </div>
                 </div>
-
+                @empty
                 <div class="bg-yellow-50 rounded-lg p-4 mb-4">
                     <div class="flex items-start">
                         <div class="bg-yellow-400 text-blue-900 rounded-lg w-16 h-16 flex flex-col items-center justify-center mr-4 text-center">
-                            <span class="font-bold text-xl">{{ now()->addDays(10)->format('d') }}</span>
-                            <span class="text-xs">{{ strtoupper(now()->addDays(10)->format('M')) }}</span>
+                            <span class="font-bold text-xl">{{ now()->format('d') }}</span>
+                            <span class="text-xs">{{ strtoupper(now()->format('M')) }}</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Sosialisasi Program Pembangunan</h4>
-                            <p class="text-gray-600 text-sm mb-2">Aula Kantor Gubernur, Jambi | 08.00-16.00 WIB</p>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Sosialisasi</span>
+                            <h4 class="font-bold text-blue-800 mb-1">Tidak ada agenda</h4>
+                            <p class="text-gray-600 text-sm mb-2">Belum ada agenda kegiatan terjadwal saat ini.</p>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Info</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="bg-yellow-50 rounded-lg p-4">
-                    <div class="flex items-start">
-                        <div class="bg-yellow-400 text-blue-900 rounded-lg w-16 h-16 flex flex-col items-center justify-center mr-4 text-center">
-                            <span class="font-bold text-xl">{{ now()->addDays(15)->format('d') }}</span>
-                            <span class="text-xs">{{ strtoupper(now()->addDays(15)->format('M')) }}</span>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-blue-800 mb-1">Pelatihan Teknis {{ setting('site_name', 'PUPR') }}</h4>
-                            <p class="text-gray-600 text-sm mb-2">Gedung Pelatihan, Jambi | 13.00-16.00 WIB</p>
-                            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Pelatihan</span>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Backoffice\Resources\Agendas\AgendaResource;
+use App\Filament\Backoffice\Resources\Announcements\AnnouncementResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -34,7 +36,11 @@ class BackofficePanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Backoffice/Resources'), for: 'App\Filament\Backoffice\Resources')
+            ->discoverResources(in: app_path('Filament/Backoffice/Resources'), for: 'App\\Filament\\Backoffice\\Resources')
+            ->resources([
+                AnnouncementResource::class,
+                AgendaResource::class,
+            ])
             ->discoverPages(in: app_path('Filament/Backoffice/Pages'), for: 'App\Filament\Backoffice\Pages')
             ->pages([
                 Dashboard::class,

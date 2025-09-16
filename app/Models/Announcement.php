@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Announcement extends Model
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +28,7 @@ class Announcement extends Model
         'meta_description',
         'meta_keywords',
         'meta_data',
+        'views_count',
     ];
 
     /**
@@ -39,6 +42,7 @@ class Announcement extends Model
         'published_at' => 'datetime',
         'expires_at' => 'datetime',
         'sort_order' => 'integer',
+        'views_count' => 'integer',
     ];
 
     /**

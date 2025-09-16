@@ -114,9 +114,6 @@
                 @if(setting('social_youtube'))
                 <a href="{{ setting('social_youtube') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-youtube"></i></a>
                 @endif
-                @if(setting('social_linkedin'))
-                <a href="{{ setting('social_linkedin') }}" class="text-white hover:text-yellow-300" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                @endif
             </div>
         </div>
     </div>
@@ -275,9 +272,6 @@
                         @endif
                         @if(setting('social_youtube'))
                         <a href="{{ setting('social_youtube') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-youtube"></i></a>
-                        @endif
-                        @if(setting('social_linkedin'))
-                        <a href="{{ setting('social_linkedin') }}" class="text-white hover:text-yellow-400" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         @endif
                     </div>
                 </div>
